@@ -1,15 +1,14 @@
 'use client'
 
-import { fetchCrewList } from "@/app/util";
+import { FetchCrewList } from "@/app/util";
 import { useState } from "react";
 import PlayerInfo from "./playerInfo";
-import { emptyCrew } from "@/app/crew";
 
 export default function CrewList({ baseUrl }: { baseUrl: string }) {
     const [filter, setFilter] = useState("");
     const [sort, setSort] = useState("level-high-low");
 
-    const { crewList, error, isLoading } = fetchCrewList(baseUrl);
+    const { crewList, error, isLoading } = FetchCrewList(baseUrl);
 
     if (isLoading) return (<div>Loading crew list...</div>);
 
@@ -18,8 +17,8 @@ export default function CrewList({ baseUrl }: { baseUrl: string }) {
     if (!crewList || crewList.length == 0) return (<div>No crew members found</div>);
     
     // Filter crewList based on display name and filter, where empty filter text allows all
-    let filteredList = crewList?.filter((crew) => crew.name.includes(filter));
-    let sortedList = filteredList?.sort((a, b) => {
+    const filteredList = crewList?.filter((crew) => crew.name.includes(filter));
+    const sortedList = filteredList?.sort((a, b) => {
         if (sort === "level-high-low") {
             return b.level - a.level;
         } else if (sort === "level-low-high") {
@@ -36,7 +35,7 @@ export default function CrewList({ baseUrl }: { baseUrl: string }) {
         return 0; // Default case, no sorting
     });
 
-    let mappedList = sortedList?.map((crewmate) => {
+    const mappedList = sortedList?.map((crewmate) => {
         return (
             <PlayerInfo key={crewmate.playerId} baseUrl={baseUrl} playerId={crewmate.playerId} />
         );

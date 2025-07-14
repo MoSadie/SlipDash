@@ -17,7 +17,7 @@ const requestRefreshInterval = 1000;
 
 export const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-export const fetchVersion = (url: string) => {
+export const FetchVersion = (url: string) => {
     const { data, error, isLoading } = useSWR(url + "/version", fetcher, {
         refreshInterval: requestRefreshInterval,
     });
@@ -25,7 +25,7 @@ export const fetchVersion = (url: string) => {
     return { versionData: data, error, isLoading };
 };
 
-export const fetchShipInfo = (url: string) => {
+export const FetchShipInfo = (url: string) => {
     const { data, error, isLoading } = useSWR(url + "/getShipInfo", fetcher, {
         refreshInterval: requestRefreshInterval,
     });
@@ -33,7 +33,7 @@ export const fetchShipInfo = (url: string) => {
     return { shipData: data, error, isLoading };
 };
 
-export const fetchCrewList = (url: string) => {
+export const FetchCrewList = (url: string) => {
     const { data, error, isLoading } = useSWR(url + "/getCrew", fetcher, {
         refreshInterval: requestRefreshInterval,
     });
@@ -41,8 +41,8 @@ export const fetchCrewList = (url: string) => {
     return { crewList: (data?.crewList as Crew[]), error, isLoading };
 };
 
-export const fetchCrewById = (url: string, playerId: string) => {
-    const { crewList, error, isLoading } = fetchCrewList(url);
+export const FetchCrewById = (url: string, playerId: string) => {
+    const { crewList, error, isLoading } = FetchCrewList(url);
 
     let character = null;
 
@@ -52,8 +52,8 @@ export const fetchCrewById = (url: string, playerId: string) => {
     return { character, error, isLoading };
 };
 
-export const fetchSelf = (url: string) => {
-    const { crewList, error, isLoading } = fetchCrewList(url);
+export const FetchSelf = (url: string) => {
+    const { crewList, error, isLoading } = FetchCrewList(url);
 
     let self = null;
     
@@ -63,7 +63,7 @@ export const fetchSelf = (url: string) => {
     return { self, error, isLoading };
 }
 
-export const fetchEnemyInfo = (url: string) => {
+export const FetchEnemyInfo = (url: string) => {
     const { data, error, isLoading } = useSWR(url + "/getEnemyShipInfo", fetcher, {
         refreshInterval: requestRefreshInterval,
     });

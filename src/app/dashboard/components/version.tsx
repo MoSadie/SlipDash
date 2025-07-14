@@ -1,10 +1,10 @@
 'use client';
 
-import { fetchVersion } from "../../util";
+import { FetchVersion } from "../../util";
 
 // Props in: Base URL to make request to
 export default function Version({ baseUrl }: { baseUrl: string }) {
-    const { versionData, error, isLoading } = fetchVersion(baseUrl);
+    const { versionData, error, isLoading } = FetchVersion(baseUrl);
 
     if (error) return <div>SlipInfo Version: Disconnected</div>;
     if (isLoading) return <div>SlipInfo Version: Loading</div>;

@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import { fetchCrewList } from "../util";
+import { useState } from "react";
+import { FetchCrewList } from "../util";
 import { Crew, spectatorCrew } from "../crew";
 
 export default function Page() {
@@ -11,12 +11,12 @@ export default function Page() {
     const [crewmate, setCrewmate] = useState<Crew | null>(null);
     const searchParams = useSearchParams();
 
-    let url = searchParams.has("url") ? searchParams.get("url") : null;
+    const url = searchParams.has("url") ? searchParams.get("url") : null;
 
 
     // Fetch crew list when URL is set
     if (url) {
-        const { crewList: list, error, isLoading } = fetchCrewList(url);
+        const { crewList: list, error, isLoading } = FetchCrewList(url);
 
         if (error) {
             console.error("Error fetching crew list:", error);
@@ -72,9 +72,9 @@ export default function Page() {
         );
     }
 
-    let protocol = urlParts[0];
+    const protocol = urlParts[0];
     // The rest of the URL is the address
-    let address = urlParts.slice(1).join("://");
+    const address = urlParts.slice(1).join("://");
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white p-4">

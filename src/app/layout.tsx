@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Atkinson_Hyperlegible } from "next/font/google";
 import "./globals.css";
+import { Suspense } from "react";
 
 const atkinsonHyperlegible = Atkinson_Hyperlegible({
   weight: ["400", "700"],
@@ -23,7 +24,9 @@ export default function RootLayout({
       <body
         className={`${atkinsonHyperlegible.variable} antialiased`}
       >
-        {children}
+        <Suspense fallback={<div>Loading...</div>}>
+          {children}
+        </Suspense>
       </body>
     </html>
   );

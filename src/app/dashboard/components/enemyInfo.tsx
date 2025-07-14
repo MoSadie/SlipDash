@@ -1,24 +1,24 @@
 'use client';
 
-import { fetchEnemyInfo } from '../../util';
+import { FetchEnemyInfo } from '../../util';
 
 const className = "shadow-lg/25 rounded-md ring p-1 item-center justify-center text-left bg-gray-500";
 
 // Props in: Base URL to make request to
 export default function EnemyInfo({ baseUrl }: { baseUrl: string }) {
-    const { enemyData, error, isLoading } = fetchEnemyInfo(baseUrl);
+    const { enemyData, error, isLoading } = FetchEnemyInfo(baseUrl);
 
     if (error) return <div className={className}>Error loading data</div>;
     if (isLoading) return <div className={className}>Loading...</div>;
 
     if (!enemyData || enemyData.maxHealth == 0) return <div className={className}>No enemy ship!</div>;
 
-    var currentMaxHealth = enemyData.maxHealth - enemyData.minHealth;
-    var currentHealth = enemyData.currentHealth - enemyData.minHealth;
+    const currentMaxHealth = enemyData.maxHealth - enemyData.minHealth;
+    const currentHealth = enemyData.currentHealth - enemyData.minHealth;
 
-    var healthPercentage = Math.round((currentHealth / currentMaxHealth) * 100);
+    const healthPercentage = Math.round((currentHealth / currentMaxHealth) * 100);
 
-    var backgroundColor = healthPercentage < 34 ? "to-red-500" : healthPercentage < 67 ? "to-yellow-500" : "to-green-500";
+    const backgroundColor = healthPercentage < 34 ? "to-red-500" : healthPercentage < 67 ? "to-yellow-500" : "to-green-500";
 
     return (
         <div className={`${className} bg-gradient-to-r ${backgroundColor}`}>

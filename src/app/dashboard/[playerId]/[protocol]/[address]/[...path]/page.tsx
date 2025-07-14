@@ -6,11 +6,6 @@ import EnemyInfo from "../../../../components/enemyInfo";
 import CrewList from "../../../../components/crewList";
 import PlayerInfo from "@/app/dashboard/components/playerInfo";
 
-
-
-// Testing data base url: https://raw.githubusercontent.com/MoSadie/SlipInfo/refs/heads/main/docs/examples
-const testBaseUrl = "https://raw.githubusercontent.com/MoSadie/SlipInfo/refs/heads/mocore-2.0/docs/examples";
-
 export default async function Page({
     params,
 }: {
@@ -18,7 +13,7 @@ export default async function Page({
 }) {
     const { protocol, address, playerId, path } = await params;
 
-    var baseUrl = `${protocol}://${address}/${path.join("/")}`;
+    const baseUrl = `${protocol}://${address}/${path.join("/")}`;
 
     return (
         <div className="flex flex-col min-h-screen">
