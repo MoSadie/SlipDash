@@ -1,37 +1,34 @@
 'use client';
 
-import useSWR from 'swr';
-import { fetcher } from '../../util';
+import { fetchEnemyInfo } from '../../util';
+
+const className = "shadow-lg/25 rounded-md ring p-1 item-center justify-center text-left bg-gray-500";
 
 // Props in: Base URL to make request to
 export default function EnemyInfo({ baseUrl }: { baseUrl: string }) {
-    const { data, error, isLoading } = useSWR(baseUrl + "/getEnemyShipInfo", fetcher, {
-        refreshInterval: 100000, //TODO lower back to 1000
-    });
+    const { enemyData, error, isLoading } = fetchEnemyInfo(baseUrl);
 
-    const { data: selfData, error: selfError, isLoading: selfIsLoading } = useSWR(baseUrl + "/getSelf", fetcher, {
-        refreshInterval: 100000, //TODO lower back to 1000
-    });
+    if (error) return <div className={className}>Error loading data</div>;
+    if (isLoading) return <div className={className}>Loading...</div>;
 
-    if (error || selfError) return <div>Error loading data</div>;
-    if (isLoading || selfIsLoading) return <div>Loading...</div>;
+    if (!enemyData || enemyData.maxHealth == 0) return <div className={className}>No enemy ship!</div>;
 
-    if (!data || !selfData) return <div>No data</div>;
-
-    var currentMaxHealth = data.maxHealth - data.minHealth;
-    var currentHealth = data.currentHealth - data.minHealth;
+    var currentMaxHealth = enemyData.maxHealth - enemyData.minHealth;
+    var currentHealth = enemyData.currentHealth - enemyData.minHealth;
 
     var healthPercentage = Math.round((currentHealth / currentMaxHealth) * 100);
 
-    var showCaptainInfo = selfData.crewmate.isCaptain;
+    var backgroundColor = healthPercentage < 34 ? "to-red-500" : healthPercentage < 67 ? "to-yellow-500" : "to-green-500";
 
     return (
-        <div>
-            <p>Ship Status:</p>
+        <div className={`${className} bg-gradient-to-r ${backgroundColor}`}>
+            <p>Enemy Ship: {enemyData.name}</p>
             <p>Health: {Math.round(currentHealth)}/{Math.round(currentMaxHealth)} ({healthPercentage}%)</p>
-            {showCaptainInfo ? <p>Fuel: {data.currentFuel}/{data.maxFuel}</p> : ""}
-            {showCaptainInfo ? <p>Salvage: {data.currentSalvage}</p> : ""}
-            <p>Gems: {data.currentGems}</p>
+            <p>Intel: {enemyData.intel}</p>
+            <p>Invaders: {enemyData.invaders}</p>
+            <p>Threat Level: {enemyData.threatLevel}</p>
+            <p>Cargo Level: {enemyData.cargoLevel}</p>
+            <p>Speed Level: {enemyData.speedLevel}</p>
         </div>
     )
 }

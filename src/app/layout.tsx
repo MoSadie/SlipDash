@@ -10,7 +10,7 @@ const atkinsonHyperlegible = Atkinson_Hyperlegible({
 
 export const metadata: Metadata = {
   title: "SlipDash",
-  description: "A compainion web app for Slipstream: Rogue Space, using SlipInfo",
+  description: "A companion web app for Slipstream: Rogue Space, using SlipInfo",
 };
 
 export default function RootLayout({
