@@ -17,7 +17,7 @@ export default function CrewList({ baseUrl }: { baseUrl: string }) {
     if (!crewList || crewList.length == 0) return (<div>No crew members found</div>);
     
     // Filter crewList based on display name and filter, where empty filter text allows all
-    const filteredList = crewList?.filter((crew) => crew.name.includes(filter));
+    const filteredList = crewList?.filter((crew) => crew.name.toLowerCase().includes(filter.toLowerCase()) || crew.archetype.toLowerCase().includes(filter.toLowerCase()));
     const sortedList = filteredList?.sort((a, b) => {
         if (sort === "level-high-low") {
             return b.level - a.level;
@@ -31,6 +31,12 @@ export default function CrewList({ baseUrl }: { baseUrl: string }) {
             return Math.round((b.currentHealth / b.maxHealth) * 100) - Math.round((a.currentHealth / a.maxHealth) * 100);
         } else if (sort === "health-low-high-percentage") {
             return Math.round((a.currentHealth / a.maxHealth) * 100) - Math.round((b.currentHealth / b.maxHealth) * 100);
+        } else if (sort === "name-a-z") {
+            return a.name.localeCompare(b.name);
+        } else if (sort === "name-z-a") {
+            return b.name.localeCompare(a.name);
+        } else if (sort === "archetype") {
+            return a.archetype.localeCompare(b.archetype);
         }
         return 0; // Default case, no sorting
     });
@@ -46,7 +52,7 @@ export default function CrewList({ baseUrl }: { baseUrl: string }) {
             <div className="flex flex-col bg-gray-900 text-white p-4">
                 <div className="flex flex-row p-1">
                 <h2 className="m-1 text-lg font-bold">Crew List:</h2>
-                <input id="filter" className="bg-gray-500 m-1" type="text" placeholder="Filter crew..." onChange={(e) => setFilter(e.target.value)} />
+                <input id="filter" className="bg-gray-500 m-1 w-75" type="text" placeholder="Filter crew... (name or archetype)" onChange={(e) => setFilter(e.target.value)} />
                 </div>
                 <div className="flex flex-row p-1">
                 <p className="m-1">Sort by:</p>
@@ -57,6 +63,9 @@ export default function CrewList({ baseUrl }: { baseUrl: string }) {
                     <option value="health-low-high-value">Health (Low to High - Total)</option>
                     <option value="health-high-low-percentage">Health (High to Low - Percentage)</option>
                     <option value="health-low-high-percentage">Health (Low to High - Percentage)</option>
+                    <option value="name-a-z">Name (A to Z)</option>
+                    <option value="name-z-a">Name (Z to A)</option>
+                    <option value="archetype">Archetype</option>
                 </select>
                 </div>
             </div>
