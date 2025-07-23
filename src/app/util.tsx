@@ -15,7 +15,12 @@ import { Crew } from "./crew";
 
 const requestRefreshInterval = 1000;
 
-export const fetcher = (url: string) => fetch(url).then((res) => res.json());
+export const fetcher = (url: string) =>
+    fetch(url, {
+        headers: {
+            "ngrok-skip-browser-warning": "true",
+        },
+    }).then((res) => res.json());
 
 export const FetchVersion = (url: string) => {
     const { data, error, isLoading } = useSWR(url + "/version", fetcher, {
