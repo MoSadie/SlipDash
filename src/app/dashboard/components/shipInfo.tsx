@@ -1,6 +1,6 @@
 'use client';
 
-import { FetchCrewList, FetchSelf, FetchShipInfo } from "@/app/util";
+import { FetchCrewList, FetchSelf, FetchShipInfo, ShipTechUnitToSymbol } from "@/app/util";
 
 const className = "shadow-lg/25 rounded-md ring p-1 item-center justify-center text-left bg-gray-500";
 
@@ -56,8 +56,8 @@ export default function ShipInfo({ baseUrl }: { baseUrl: string }) {
             <p>Active Ship Tech:</p>
             {activeShipTech.length > 0 ? (
                 <ul>
-                {activeShipTech.map((tech: { Name: string; ShortDescription: string; Level: number; MaxLevel: number }, index: number) => (
-                    <li key={index} title={tech.ShortDescription}>
+                {activeShipTech.map((tech: { Name: string; ShortDescription: string; Level: number; MaxLevel: number; UnitType: number, Levels: { [key: number]: { Level: number, Value: number, Cost: number; } } }, index: number) => (
+                    <li key={index} title={tech.ShortDescription + (tech.Levels && (tech.Level - 1) in tech.Levels ? ` (Current Value: ${tech.Levels[tech.Level - 1].Value}${ShipTechUnitToSymbol(tech.UnitType)})` : "")}>
                     <strong>{tech.Name}</strong>:  (Level {tech.Level}/{tech.MaxLevel})
                     </li>
                 ))}

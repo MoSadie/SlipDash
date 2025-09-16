@@ -13,7 +13,7 @@ export default async function Page({
 }) {
     const { protocol, address, playerId, path } = await params;
 
-    let decodedAddress = decodeURIComponent(address);
+    const decodedAddress = decodeURIComponent(address);
 
     const baseUrl = `${protocol}://${decodedAddress}/${path.join("/")}`;
 

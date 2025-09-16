@@ -112,3 +112,16 @@ export function archetypeToAvatar(archetype: string) {
             return <Image className={avatarClassName} src={AvatarDefault} alt="A space background" />;
     }
 }
+
+export function ShipTechUnitToSymbol(unit: number) {
+    switch (unit) {
+        case 0:
+            return ""; // VALUE - no unit
+        case 1:
+            return "%"; // PERCENTAGE
+        case 2:
+            return "s"; // SECONDS
+        default:
+            return ""; // Unknown unit
+    }
+}
