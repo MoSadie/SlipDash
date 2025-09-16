@@ -13,7 +13,9 @@ export default async function Page({
 }) {
     const { protocol, address, playerId, path } = await params;
 
-    const baseUrl = `${protocol}://${address}/${path.join("/")}`;
+    let decodedAddress = decodeURIComponent(address);
+
+    const baseUrl = `${protocol}://${decodedAddress}/${path.join("/")}`;
 
     return (
         <div className="flex flex-col min-h-screen">
@@ -27,7 +29,7 @@ export default async function Page({
             </main>
             <footer className="w-full p-4 text-center bg-gray-800 text-white flex flex-row items-center gap-5 justify-center">
                 <Link href="/">Return to Setup</Link>
-                <p>SlipDash v0.1</p>
+                <Link target="_blank" href="https://github.com/MoSadie/SlipDash">SlipDash v0.2</Link>
                 <Version baseUrl={baseUrl} />
                 <p>Made by <Link target="_blank" href="https://hello.mosadie.com">MoSadie</Link></p>
             </footer>
