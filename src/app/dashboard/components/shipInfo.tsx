@@ -58,7 +58,7 @@ export default function ShipInfo({ baseUrl }: { baseUrl: string }) {
                 <ul>
                 {activeShipTech.map((tech: { Name: string; ShortDescription: string; Level: number; MaxLevel: number; UnitType: number, Levels: { [key: number]: { Level: number, Value: number, Cost: number; } } }, index: number) => (
                     <li key={index} title={tech.ShortDescription + (tech.Levels && (tech.Level - 1) in tech.Levels ? ` (Current Value: ${tech.Levels[tech.Level - 1].Value}${ShipTechUnitToSymbol(tech.UnitType)})` : "")}>
-                    <strong>{tech.Name}</strong>:  (Level {tech.Level}/{tech.MaxLevel})
+                    {tech.Name}:  (Level {tech.Level}/{tech.MaxLevel})
                     </li>
                 ))}
                 </ul>
