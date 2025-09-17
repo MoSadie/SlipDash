@@ -117,7 +117,7 @@ export function ShipTechUnitToSymbol(unit: string) {
     switch (unit) {
         case "VALUE":
             return "";
-        case "PERCENTAGE":
+        case "PERCENT":
             return "%";
         case "SECONDS":
             return "s";
