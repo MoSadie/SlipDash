@@ -113,14 +113,14 @@ export function archetypeToAvatar(archetype: string) {
     }
 }
 
-export function ShipTechUnitToSymbol(unit: number) {
+export function ShipTechUnitToSymbol(unit: string) {
     switch (unit) {
-        case 0:
-            return ""; // VALUE - no unit
-        case 1:
-            return "%"; // PERCENTAGE
-        case 2:
-            return "s"; // SECONDS
+        case "VALUE":
+            return "";
+        case "PERCENTAGE":
+            return "%";
+        case "SECONDS":
+            return "s";
         default:
             return ""; // Unknown unit
     }
