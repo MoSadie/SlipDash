@@ -22,6 +22,8 @@ export const FetchVersion = (url: string) => {
         refreshInterval: requestRefreshInterval,
     });
 
+    if (error) console.error("Error fetching version:", error);
+
     return { versionData: data, error, isLoading };
 };
 
@@ -29,6 +31,8 @@ export const FetchShipInfo = (url: string) => {
     const { data, error, isLoading } = useSWR(url + "/getShipInfo", fetcher, {
         refreshInterval: requestRefreshInterval,
     });
+
+    if (error) console.error("Error fetching ship info:", error);
 
     return { shipData: data, error, isLoading };
 };
@@ -38,11 +42,15 @@ export const FetchCrewList = (url: string) => {
         refreshInterval: requestRefreshInterval,
     });
 
+    if (error) console.error("Error fetching crew list:", error);
+
     return { crewList: (data?.crewList as Crew[]), error, isLoading };
 };
 
 export const FetchCrewById = (url: string, playerId: string) => {
     const { crewList, error, isLoading } = FetchCrewList(url);
+
+    if (error) console.error("Error fetching crew by ID:", error);
 
     let character = null;
 
@@ -54,6 +62,8 @@ export const FetchCrewById = (url: string, playerId: string) => {
 
 export const FetchSelf = (url: string) => {
     const { crewList, error, isLoading } = FetchCrewList(url);
+
+    if (error) console.error("Error fetching self:", error);
 
     let self = null;
     
@@ -67,6 +77,8 @@ export const FetchEnemyInfo = (url: string) => {
     const { data, error, isLoading } = useSWR(url + "/getEnemyShipInfo", fetcher, {
         refreshInterval: requestRefreshInterval,
     });
+
+    if (error) console.error("Error fetching enemy ship info:", error);
 
     return { enemyData: data?.enemyShip, error, isLoading };
 }
@@ -98,5 +110,18 @@ export function archetypeToAvatar(archetype: string) {
 
         default:
             return <Image className={avatarClassName} src={AvatarDefault} alt="A space background" />;
+    }
+}
+
+export function ShipTechUnitToSymbol(unit: string) {
+    switch (unit) {
+        case "VALUE":
+            return "";
+        case "PERCENT":
+            return "%";
+        case "SECONDS":
+            return "s";
+        default:
+            return ""; // Unknown unit
     }
 }
