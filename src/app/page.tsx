@@ -11,7 +11,7 @@ export default function Home() {
 
   const [url, setUrl] = useState(defaultUrl);
 
-  const { versionData, error, isLoading } = FetchSilently("https://tunnel.mosadie.com/slipinfo");
+  const { error, isLoading } = FetchSilently("https://tunnel.mosadie.com/slipinfo");
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white p-4">
@@ -33,7 +33,7 @@ export default function Home() {
                 setUrl("https://tunnel.mosadie.com/slipinfo");
               }}
               className="bg-blue-500 text-white p-2 rounded-md mr-2"
-            >Use MoSadie's Game</button>
+            >Use MoSadie&apos;s Game</button>
             }
             <button
               onClick={() => {
