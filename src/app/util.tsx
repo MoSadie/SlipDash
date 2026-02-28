@@ -17,6 +17,14 @@ const requestRefreshInterval = 1000;
 
 export const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
+export const FetchSilently = (url: string) => {
+    const { data, error, isLoading } = useSWR(url + "/version", fetcher, {
+        refreshInterval: requestRefreshInterval,
+    });
+
+    return { versionData: data, error, isLoading };
+};
+
 export const FetchVersion = (url: string) => {
     const { data, error, isLoading } = useSWR(url + "/version", fetcher, {
         refreshInterval: requestRefreshInterval,
